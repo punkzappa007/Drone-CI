@@ -25,3 +25,15 @@ git clone $DT_LINK --depth=1 --single-branch $DT_PATH
 echo " ===+++ Building Recovery +++==="
 cd work
 . build/envsetup.sh &&lunch omni_$DEVICE-eng &&export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET
+
+# Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
+
+cd out/target/product/noob
+
+sudo zip -r9 PBRP-noob.zip recovery.img
+
+curl -sL https://git.io/file-transfer | sh
+
+./transfer wet *.zip
+
+./transfer wet recovery.img

@@ -4,7 +4,7 @@ type: docker
 name: linux-amd64
 
 platform:
-  arch: 
+  arch: amd64
   os: linux
 
 steps:

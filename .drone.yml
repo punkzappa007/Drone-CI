@@ -12,13 +12,3 @@ steps:
   image: brock5555/recovery
   commands:
   - bash build.sh
-  
-- uses: actions/upload-artifact@v2
-  with:
-   name: recoveryzip
-   path: work/out/target/product/*/*.zip
-
-- uses: actions/upload-artifact@v2
-  with:
-   name: recoveryimage
-   path: work/out/target/product/*/*.img

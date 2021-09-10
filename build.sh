@@ -2,26 +2,34 @@
 
 # Just a basic script U can improvise lateron asper ur need xD 
 
-MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-10.0"
+MANIFEST="git://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0"
 DEVICE=noob
 DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro"
 DT_PATH=device/umidigi/noob
 
 echo " ===+++ Setting up Build Environment +++==="
-sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php* 
-sudo -E apt-get clean 
-sudo -E apt-get -qq update
-sudo -E apt-get -qq install bc build-essential zip curl libstdc++6 git wget python gcc clang libssl-dev repo rsync flex curl  bison aria2
-sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
-sudo chmod a+rx /usr/local/bin/repo
-mkdir work
-cd work
+apt install openssh-server -y
+apt update --fix-missing
+apt install openssh-server -y
+mkdir ~/shrp && cd ~/shrp
 
 echo " ===+++ Syncing Recovery Sources +++==="
 repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-repo sync -j4
-git clone $DT_LINK --depth=1 --single-branch $DT_PATH
+repo sync -c -q --force-sync --no-clone-bundle --no-tags -j6
+#repo init --depth=1 -u $MANIFEST
+#repo sync
+git clone --depth=1 $DT_LINK $DT_PATH
 
 echo " ===+++ Building Recovery +++==="
-cd work
-. build/envsetup.sh &&lunch omni_$DEVICE-eng &&export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET
+. build/envsetup.sh
+export ALLOW_MISSING_DEPENDENCIES=true
+lunch omni_${DEVICE}-eng
+mka recoveryimage
+
+# Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
+echo " ===+++ Uploading Recovery +++==="
+
+cd out/target/product/$DEVICE
+curl -sL https://git.io/file-transfer | sh
+./transfer wet *.zip
+

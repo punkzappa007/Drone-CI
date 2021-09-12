@@ -1,31 +1,42 @@
 #!/bin/bash
-
 # Just a basic script U can improvise lateron asper ur need xD 
 
-mkdir -p /tmp/recovery
+MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-10.0"
+DEVICE=A9_Pro
+DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro -b android-10.0"
+DT_PATH=device/umidigi/A9_Pro
 
-cd /tmp/recovery
+echo " ===+++ Setting up Build Environment +++==="
+sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php* 
+sudo -E apt-get clean 
+sudo -E apt-get -qq update
+sudo -E apt-get -qq install bc build-essential zip curl libstdc++6 git wget python gcc clang libssl-dev repo rsync flex curl  bison aria2
+sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
+sudo chmod a+rx /usr/local/bin/repo
 
-sudo apt install git -y
+echo " ===+++ Syncing Recovery Sources +++==="
+mkdir work
+cd work
+repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
+repo sync -j4
+git clone $DT_LINK --depth=1 --single-branch $DT_PATH
 
-repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-10.0 -g default,-device,-mips,-darwin,-notdefault 
-
-repo sync -j$(nproc --all)
-
-git clone https://github.com/punkzappa007/android_device_umidigi_a9pro device/umidigi/A9_Pro
-
-rm -rf out
-
-. build/envsetup.sh && lunch omni_A9_Pro-eng && export ALLOW_MISSING_DEPENDENCIES=true && export LC_ALL="C" && mka recoveryimage
+echo " ===+++ Building Recovery +++==="
+cd work
+. build/envsetup.sh
+export TW_THEME=portrait_hdpi
+export ALLOW_MISSING_DEPENDENCIES=true
+lunch omni_${DEVICE}-eng && mka recoveryimage
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
+echo " ===+++ Uploading Recovery +++==="
+version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
+OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
 
-cd out/target/product/A9_Pro
+cd out/target/product/$DEVICE
+mv recovery.img ${OUTFILE%.zip}.img
+zip -r9 $OUTFILE ${OUTFILE%.zip}.img
 
-sudo zip -r9 PBRP-A9_Pro.zip recovery.img
-
-curl -sL https://git.io/file-transfer | sh 
-
+#curl -T $OUTFILE https://oshi.at
+curl -sL $OUTFILE https://git.io/file-transfer | sh
 ./transfer wet *.zip
-
-./transfer wet recovery.img

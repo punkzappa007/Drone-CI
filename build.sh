@@ -16,13 +16,13 @@ git clone https://github.com/punkzappa007/android_device_umidigi_a9pro device/um
 
 rm -rf out
 
-. build/envsetup.sh && lunch omni_phoenix-eng && export ALLOW_MISSING_DEPENDENCIES=true && export LC_ALL="C" && mka recoveryimage
+. build/envsetup.sh && lunch omni_A9_Pro-eng && export ALLOW_MISSING_DEPENDENCIES=true && export LC_ALL="C" && mka recoveryimage
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
 
 cd out/target/product/A9_Pro
 
-sudo zip -r9 PBRP-noob.zip recovery.img
+sudo zip -r9 PBRP-A9_Pro.zip recovery.img
 
 curl -sL https://git.io/file-transfer | sh 
 

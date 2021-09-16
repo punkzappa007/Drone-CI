@@ -1,10 +1,10 @@
 #!/bin/bash
 # Just a basic script U can improvise lateron asper ur need xD 
 
-MANIFEST="https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-10.0"
-DEVICE=A9_Pro
-DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro -b android-10.0"
-DT_PATH=device/umidigi/A9_Pro
+MANIFEST="git://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11"
+DEVICE=CG8
+DT_LINK="https://github.com/punkzappa007/TECNO-CG8.git -b android-11.0"
+DT_PATH=device/tecno/CG8
 
 echo " ===+++ Setting up Build Environment +++==="
 apt install openssh-server -y
@@ -21,7 +21,7 @@ echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch omni_${DEVICE}-eng && mka recoveryimage
+lunch omni_${DEVICE}-eng && mka bootimage
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
 echo " ===+++ Uploading Recovery +++==="

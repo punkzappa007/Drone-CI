@@ -21,7 +21,7 @@ echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch omni_TECNO-CG8-eng && mka bootimage
+lunch twrp_TECNO-CG8-eng && mka bootimage
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
 echo " ===+++ Uploading Recovery +++==="

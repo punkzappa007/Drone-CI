@@ -4,7 +4,7 @@
 MANIFEST="git://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11"
 DEVICE=CG8
 DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b android-11.0"
-DT_PATH=device/tecno/TECNO-CG8
+DT_PATH=device/tecno/CG8
 
 echo " ===+++ Setting up Build Environment +++==="
 apt install openssh-server -y
@@ -21,7 +21,7 @@ echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch twrp_TECNO-CG8-eng && mka bootimage
+lunch twrp_CG8-eng && mka bootimage
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
 echo " ===+++ Uploading Recovery +++==="

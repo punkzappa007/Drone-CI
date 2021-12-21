@@ -23,7 +23,7 @@ export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
 lunch twrp_CG8-eng && mka bootimage
 
-# Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
+# Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
 version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
 OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip

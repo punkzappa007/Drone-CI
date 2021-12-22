@@ -3,7 +3,7 @@
 
 MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0"
 DEVICE=CG8
-DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro -b CG8-PBRP"
+DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b CG8-PBRP"
 DT_PATH=device/tecno/CG8
 
 echo " ===+++ Setting up Build Environment +++==="

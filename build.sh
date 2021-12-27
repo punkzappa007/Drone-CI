@@ -15,14 +15,11 @@ sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleap
 sudo chmod a+rx /usr/local/bin/repo
 
 echo " ===+++ Syncing Recovery Sources +++==="
-mkdir work
-cd work
 repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
 repo sync -j4
 git clone $DT_LINK --depth=1 --single-branch $DT_PATH
 
 echo " ===+++ Building Recovery +++==="
-cd work
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true

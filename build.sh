@@ -1,7 +1,7 @@
 #!/bin/bash
 # Just a basic script U can improvise lateron asper ur need xD 
 
-MANIFEST="https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0"
+MANIFEST="https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-10.0"
 DEVICE=CG8
 DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b CG8-PBRP"
 DT_PATH=device/tecno/CG8

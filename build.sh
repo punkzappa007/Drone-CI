@@ -18,6 +18,7 @@ echo " ===+++ Syncing Recovery Sources +++==="
 repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
 repo sync -j4
 git clone $DT_LINK --depth=1 --single-branch $DT_PATH
+mkdir ~/pbrp && cd ~/pbrp
 
 echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh

@@ -7,24 +7,27 @@ DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b C
 DT_PATH=device/tecno/CG8
 
 echo " ===+++ Setting up Build Environment +++==="
-sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php* 
-sudo -E apt-get clean 
-sudo -E apt-get -qq update
-sudo -E apt-get -qq install bc build-essential zip curl libstdc++6 git wget python gcc clang libssl-dev repo rsync flex curl  bison aria2
-sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
-sudo chmod a+rx /usr/local/bin/repo
+#apt install openssh-server openjdk-8-jdk -y
+apt install openssh-server -y
+apt update --fix-missing
+#apt install openssh-server openjdk-8-jdk -y
+apt install openssh-server -y
+mkdir ~/twrpBuilding && cd ~/twrpBuilding
 
 echo " ===+++ Syncing Recovery Sources +++==="
-repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-repo sync -j4
-git clone $DT_LINK --depth=1 --single-branch $DT_PATH
-mkdir ~/pbrp && cd ~/pbrp
+repo init --depth=1 -u $MANIFEST -g default,-device,-mips,-darwin,-notdefault 
+repo sync -j$(nproc --all)
+git clone --depth=1 $DT_LINK $DT_PATH
 
 echo " ===+++ Building Recovery +++==="
-. build/envsetup.sh
-export TW_THEME=portrait_hdpi
+rm -rf out
+source build/envsetup.sh
+echo " source build/envsetup.sh done"
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch twrp_${DEVICE}-eng && mka bootimage
+lunch twrp_${DEVICE}-eng || abort " lunch failed with exit status $?"
+echo " lunch twrp_${DEVICE}-eng done"
+mka bootimage || abort " mka failed with exit status $?"
+echo " mka bootimage done"
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
 echo " ===+++ Uploading Recovery +++==="

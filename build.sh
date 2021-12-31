@@ -12,7 +12,7 @@ apt update --fix-missing
 apt install openssh-server -y
 mkdir ~/twrp11 && cd ~/twrp11
 
-echo " ===+++ Syncing Recovery Sources +++==="
+echo " ===+++ Syncing Recovery Sources  +++==="
 repo init --depth=1 -u $MANIFEST
 repo sync
 git clone --depth=1 $DT_LINK $DT_PATH

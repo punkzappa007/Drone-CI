@@ -19,7 +19,7 @@ echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch twrp_CG8-eng && mka bootimage
+lunch twrp_CG8-eng && mka recoveryimage
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
@@ -27,7 +27,7 @@ version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" 
 OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
 
 cd out/target/product/$DEVICE
-mv boot.img ${OUTFILE%.zip}.img
+mv recovery.img ${OUTFILE%.zip}.img
 zip -r9 $OUTFILE ${OUTFILE%.zip}.img
 
 #curl -T $OUTFILE https://oshi.at

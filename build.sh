@@ -1,7 +1,7 @@
 #!/bin/bash
 # Just a basic script U can improvise lateron asper ur need xD 
 
-MANIFEST="https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0"
+MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0"
 DT_LINK="https://github.com/punkzappa007/android_device_tecno_CG8-PBRP.gi -b CG8-Pbrp"
 
 echo " ===+++ Setting up Build Environment +++==="
@@ -19,7 +19,7 @@ echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch twrp_CG8-eng && mka recoveryimage
+lunch omni_CG8-eng && mka pbrp
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
@@ -27,7 +27,7 @@ version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" 
 OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
 
 cd out/target/product/$DEVICE
-mv recovery.img ${OUTFILE%.zip}.img
+mv boot.img ${OUTFILE%.zip}.img
 zip -r9 $OUTFILE ${OUTFILE%.zip}.img
 
 #curl -T $OUTFILE https://oshi.at

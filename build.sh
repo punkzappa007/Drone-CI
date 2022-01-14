@@ -22,7 +22,7 @@ export ALLOW_MISSING_DEPENDENCIES=true
 lunch omni_CG8-eng && mka pbrp
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
-echo " ===+++ Uploading Recovery ++++==="
+echo " ===+++ Uploading Recovery +++==="
 version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
 OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
 

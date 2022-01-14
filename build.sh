@@ -19,6 +19,7 @@ mkdir work
 cd work
 repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
 repo sync -j4
+repo sync -j4
 git clone $DT_LINK --depth=1 --single-branch $DT_PATH
 
 echo " ===+++ Building Recovery +++==="

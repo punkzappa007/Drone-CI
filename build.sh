@@ -6,7 +6,7 @@ DEVICE=CG8
 DT_LINK="https://github.com/punkzappa007/android_device_tecno_CG8-PBRP.gi -b CG8-Pbrp"
 DT_PATH=device/tecno/CG8
 
-echo " ===+++ Setting up Build Environment +++==="
+echo " ===+++ Setting up Build Environment ++++==="
 apt install openssh-server -y
 apt update --fix-missing
 apt install openssh-server -y

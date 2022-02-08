@@ -11,16 +11,19 @@ apt install openssh-server -y
 mkdir ~/twrp11 && cd ~/twrp11
 
 echo " ===+++ Syncing Recovery Sources  +++==="
-repo init --depth=1 -u $MANIFEST
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0 --groups=all,-notdefault,-device,-darwin,-x86,-mips
+repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
+
+#repo init --depth=1 -u $MANIFEST
+#repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 git clone --depth=1 $DT_LINK device/tecno/CG8
 
 echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch omni_cg8-eng && mka pbrp
-
+#lunch omni_cg8-eng && mka pbrp
+lunch omni_cg8-eng && mka -j$(nproc --all) pbrp
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
 version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)

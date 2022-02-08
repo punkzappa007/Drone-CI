@@ -23,13 +23,13 @@ echo " ===+++ Building Recovery +++==="
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
 #lunch omni_cg8-eng && mka pbrp
-lunch omni_cg8-eng && mka -j$(nproc --all) pbrp
+lunch omni_CG8-eng && mka -j$(nproc --all) pbrp
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
 version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
 OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
 
-cd twrp11/out/target/product/$DEVICE
+cd out/target/product/$DEVICE
 mv boot.img ${OUTFILE%.zip}.img
 zip -r9 $OUTFILE ${OUTFILE%.zip}.img
 

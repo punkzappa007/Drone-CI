@@ -12,7 +12,7 @@ mkdir ~/twrp11 && cd ~/twrp11
 
 echo " ===+++ Syncing Recovery Sources  +++==="
 repo init --depth=1 -u $MANIFEST
-repo sync
+repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 git clone --depth=1 $DT_LINK device/tecno/CG8
 
 echo " ===+++ Building Recovery +++==="

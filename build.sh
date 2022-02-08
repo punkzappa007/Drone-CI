@@ -1,9 +1,9 @@
 #!/bin/bash
 # Just a basic script U can improvise lateron asper ur need xD 
 
-MANIFEST="git://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11"
+MANIFEST="git://github.com/SHRP/manifest.git -b v3_11.0"
 DEVICE=CG8
-DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b android-11.0"
+DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b CG8-SHRP"
 DT_PATH=device/tecno/CG8
 
 echo " ===+++ Setting up Build Environment +++==="
@@ -14,7 +14,8 @@ mkdir ~/twrp11 && cd ~/twrp11
 
 echo " ===+++ Syncing Recovery Sources  +++==="
 repo init --depth=1 -u $MANIFEST
-repo sync
+repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+#repo sync
 git clone --depth=1 $DT_LINK $DT_PATH
 
 echo " ===+++ Building Recovery +++==="

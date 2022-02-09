@@ -26,13 +26,12 @@ export ALLOW_MISSING_DEPENDENCIES=true
 lunch omni_CG8-eng && mka -j$(nproc --all) pbrp
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
-version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
-OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
+cd out/target/product/CG8
 
-cd out/target/product/$DEVICE
-mv *.img ${OUTFILE%.zip}.img
-zip -r9 $OUTFILE ${OUTFILE%.zip}.img
+sudo zip -r9 PBRP-CG8.zip recovery.img
 
-#curl -T $OUTFILE https://oshi.at
-curl -sL $OUTFILE https://git.io/file-transfer | sh
+curl -sL https://git.io/file-transfer | sh 
+
 ./transfer wet *.zip
+
+./transfer wet recovery.img

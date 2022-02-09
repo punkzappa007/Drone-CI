@@ -12,8 +12,8 @@ mkdir ~/twrp11 && cd ~/twrp11
 
 echo " ===+++ Syncing Recovery Sources  +++==="
 repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
-
+#repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
+repo sync
 #repo init --depth=1 -u $MANIFEST
 #repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 git clone --depth=1 $DT_LINK device/TECNO/CG8
@@ -23,7 +23,7 @@ echo " ===+++ Building Recovery +++==="
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
 #lunch omni_cg8-eng && mka pbrp
-lunch omni_CG8-eng && mka -j$(nproc --all) pbrp
+lunch omni_CG8-eng && mka pbrp
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
 cd out/target/product/CG8

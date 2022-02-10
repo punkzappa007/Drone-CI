@@ -1,26 +1,31 @@
-
 #!/bin/bash
+# Just a basic script U can improvise lateron asper ur need xD
 
-# Just a basic script U can improvise lateron asper ur need xD 
+MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0"
+DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b PBRP-CG8"
 
-mkdir -p /tmp/recovery
+echo " ===+++ Setting up Build Environment +++==="
+apt install openssh-server -y
+apt update --fix-missing
+apt install openssh-server -y
+mkdir ~/twrp11 && cd ~/twrp11
 
-cd /tmp/recovery
+echo " ===+++ Syncing Recovery Sources  +++==="
+repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0 --groups=all,-notdefault,-device,-darwin,-x86,-mips
+repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
 
-sudo apt install git -y
+#repo init --depth=1 -u $MANIFEST
+#repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+git clone --depth=1 $DT_LINK device/tecno/CG8
 
-repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-10.0 -g default,-device,-mips,-darwin,-notdefault 
-
-repo sync -j$(nproc --all)
-
-git clone https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b CG8-PBRP device/tecno/CG8
-
-rm -rf out
-
-. build/envsetup.sh && lunch twrp_CG8-eng && export ALLOW_MISSING_DEPENDENCIES=true && export LC_ALL="C" && mka bootimage
-
-# Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
-
+echo " ===+++ Building Recovery +++==="
+. build/envsetup.sh
+export TW_THEME=portrait_hdpi
+export ALLOW_MISSING_DEPENDENCIES=true
+#lunch omni_cg8-eng && mka pbrp
+lunch omni_CG8-eng && mka -j$(nproc --all) pbrp
+# Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
+echo " ===+++ Uploading Recovery +++==="
 cd out/target/product/CG8
 
 sudo zip -r9 PBRP-CG8.zip recovery.img

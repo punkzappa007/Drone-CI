@@ -22,6 +22,9 @@ echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
+export PB_DISABLE_DEFAULT_DM_VERITY := true
+export PB_TORCH_PATH := /sys/devices/virtual/torch/torch/torch_level
+export PB_TORCH_MAX_BRIGHTNESS := 1
 #lunch omni_cg8-eng && mka pbrp
 lunch omni_CG8-eng && mka -j$(nproc --all) pbrp
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)

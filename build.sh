@@ -1,7 +1,7 @@
 #!/bin/bash
 # Just a basic script U can improvise lateron asper ur need xD
 
-MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0"
+MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-10.0"
 DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b PBRP-CG8"
 
 echo " ===+++ Setting up Build Environment +++==="

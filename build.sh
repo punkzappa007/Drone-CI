@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Just a basic script U can improvise lateron asper ur need xD 
+# Just a basic script U can improvise lateron asper ur need xD
 
 MANIFEST="git://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0"
 DEVICE=noob

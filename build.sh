@@ -5,7 +5,7 @@
 MANIFEST="git://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0"
 DEVICE=noob
 DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro"
-DT_PATH=device/umidigi/noob
+DT_PATH=device/umidigi/A9_Pro
 
 echo " ===+++ Setting up Build Environment +++==="
 apt install openssh-server -y

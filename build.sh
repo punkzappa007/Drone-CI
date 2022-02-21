@@ -2,7 +2,7 @@
 
 # Just a basic script U can improvise lateron asper ur need xD 
 
-MANIFEST="git://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0"
+MANIFEST="git://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_11.0"
 DEVICE=A9_Pro
 DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro"
 DT_PATH=device/umidigi/A9_Pro

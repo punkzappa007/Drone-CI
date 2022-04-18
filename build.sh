@@ -13,7 +13,8 @@ apt install openssh-server -y
 mkdir ~/twrp11 && cd ~/twrp11
 
 echo " ===+++ Syncing Recovery Sources  +++==="
-repo init --depth=1 -u $MANIFEST
+#repo init --depth=1 -u $MANIFEST
+repo init -u https://github.com/SHRP/manifest.git -b v3_11.0
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 #repo sync
 git clone --depth=1 $DT_LINK $DT_PATH

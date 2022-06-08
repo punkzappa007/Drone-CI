@@ -17,7 +17,7 @@ echo " ===+++ Syncing Recovery Sources  +++==="
 repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0
 repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
 
-#repo init --depth=1 -u $MANIFEST
+#repo init --depth=1 -u $MANIFEST 
 #repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 git clone --depth=1 $DT_LINK device/tecno/CG8
 

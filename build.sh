@@ -2,7 +2,7 @@
 # Just a basic script U can improvise lateron asper ur need xD
 
 MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0"
-DT_LINK="https://github.com/punkzappa007/android_device_tecno_CG8-PBRP.git -b android-11.0"
+DT_LINK="https://github.com/PitchBlackRecoveryProject/android_device_TECNO_LD7-pbrp.git -b android-11.0"
 
 echo " ===+++ Setting up Build Environment +++==="
 apt install openssh-server -y
@@ -19,7 +19,7 @@ repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
 
 #repo init --depth=1 -u $MANIFEST 
 #repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
-git clone --depth=1 $DT_LINK device/tecno/CG8
+git clone --depth=1 $DT_LINK device/TECNO/CG8
 
 echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh

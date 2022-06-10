@@ -19,7 +19,7 @@ repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
 
 #repo init --depth=1 -u $MANIFEST
 #repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
-git clone --depth=1 $DT_LINK device/tecno/CG8
+git clone --depth=1 $DT_LINK device/TECNO/CG8
 
 echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh

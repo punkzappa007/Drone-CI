@@ -15,7 +15,8 @@ echo " ===+++ Syncing Recovery Sources  +++==="
 #repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0 --groups=all,-notdefault,-device,-darwin,-x86,-mips
 #==================================
 repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0
-repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
+#repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
+repo sync -c --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune -j$(nproc --all)
 
 #repo init --depth=1 -u $MANIFEST 
 #repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Just a basic script U can improvise lateron asper ur need xD
+# Just a basic script U can improvise lateron asper ur need xD 
 
 MANIFEST="git://github.com/SHRP/manifest.git -b v3_11.0"
 DEVICE=CG8

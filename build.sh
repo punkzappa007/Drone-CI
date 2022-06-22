@@ -32,7 +32,7 @@ lunch omni_CG8-eng && mka -j$(nproc --all) bootimage
 echo " ===+++ Uploading Recovery +++==="
 cd out/target/product/CG8
 
-sudo zip -r9 PBRP-CG8.zip recovery.img
+sudo zip -r9 PBRP-CG8.zip boot.img
 
 curl -sL https://git.io/file-transfer | sh 
 

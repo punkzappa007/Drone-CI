@@ -14,6 +14,7 @@ mkdir ~/twrp11 && cd ~/twrp11
 
 echo " ===+++ Syncing Recovery Sources  +++==="
 repo init --depth=1 -u $MANIFEST
+git fetch https://gerrit.twrp.me/android_system_vold refs/changes/40/5540/4 && git cherry-pick FETCH_HEAD
 repo sync
 git clone --depth=1 $DT_LINK $DT_PATH
 

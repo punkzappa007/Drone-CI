@@ -1,8 +1,8 @@
 #!/bin/bash
 # Just a basic script U can improvise lateron asper ur need xD
 
-MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0"
-DT_LINK="https://github.com/punkzappa007/TECNO-CG8.git -b android-11.0"
+MANIFEST="https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1"
+DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b android-12.1"
 
 echo " ===+++ Setting up Build Environment +++==="
 apt install openssh-server -y
@@ -14,9 +14,10 @@ echo " ===+++ Syncing Recovery Sources  +++==="
 #==================working=========
 #repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0 --groups=all,-notdefault,-device,-darwin,-x86,-mips
 #==================================
-repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0
-
-repo sync -c --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune -j$(nproc --all)
+repo init --depth=1 -u $MANIFEST
+repo sync -c -j4 --force-sync --no-clone-bundle --no-tags
+repo sync --force-sync
+#repo sync -c --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune -j$(nproc --all)
 
 git clone --depth=1 $DT_LINK device/TECNO/CG8
 
@@ -25,7 +26,13 @@ echo " ===+++ Building Recovery +++==="
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
 
-lunch twrp_CG8-eng && mka -j$(nproc --all) pbrp
+. build/envsetup.sh
+lunch twrp_CG8-userdebug
+mka clean
+lunch twrp_CG8-userdebug
+mka bacon
+
+#lunch twrp_CG8-eng && mka -j$(nproc --all) pbrp
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
 cd out/target/product/CG8

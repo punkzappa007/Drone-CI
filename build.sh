@@ -1,5 +1,5 @@
 #!/bin/bash
-# Just a basic script U can improvise lateron asper ur need xD
+# Just a basic script U can improvise lateron asper ur need xD 
 
 MANIFEST="https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1"
 DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b android-12.1"

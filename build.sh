@@ -26,7 +26,7 @@ echo " ===+++ Building Recovery +++==="
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
 #lunch omni_cg8-eng && mka pbrp
-lunch omni_CG8-eng && mka -j$(nproc --all) pbrp
+lunch twrp_CG8-eng && mka -j$(nproc --all) pbrp
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc) 
 echo " ===+++ Uploading Recovery +++==="
 cd out/target/product/CG8

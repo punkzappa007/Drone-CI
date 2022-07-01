@@ -3,7 +3,8 @@
 
 MANIFEST="https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11"
 DEVICE=CG8
-DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b CG8-SHRP"
+#DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b CG8-SHRP"
+DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b CG8-OFOX"
 DT_PATH=device/tecno/CG8
 
 echo " ===+++ Setting up Build Environment +++==="

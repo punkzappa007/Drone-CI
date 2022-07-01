@@ -1,9 +1,9 @@
 #!/bin/bash
-# Just a basic script U can improvise lateron asper ur need xD 
+# Just a basic script U can improvise lateron asper ur need xD
 
 MANIFEST="https://gitlab.com/OrangeFox/sync.git"
 DEVICE=CG8
-DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b CG8-OFOX"
+DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b OFOX-CG8"
 DT_PATH=device/tecno/CG8
 
 echo " ===+++ Setting up Build Environment +++==="

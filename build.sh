@@ -1,5 +1,5 @@
 #!/bin/bash
-# Just a basic script U can improvise lateron asper ur need xD
+# Just a basic script U can improvise lateron asper ur need xD 
 
 MANIFEST="https://gitlab.com/OrangeFox/sync.git"
 DEVICE=CG8

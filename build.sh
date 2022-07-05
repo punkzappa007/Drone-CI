@@ -34,9 +34,9 @@ rm -rf out
 source build/envsetup.sh
 echo " source build/envsetup.sh done"
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch omni_${DEVICE}-eng || abort " lunch failed with exit status $?"
+lunch twrp_CG8-eng || abort " lunch failed with exit status $?"
 echo " lunch omni_${DEVICE}-eng done"
-mka recoveryimage || abort " mka failed with exit status $?"
+mka pbrp || abort " mka failed with exit status $?"
 echo " mka recoveryimage done"
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)

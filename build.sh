@@ -1,40 +1,53 @@
-#!/bin/bash
-# Just a basic script U can improvise lateron asper ur need xD 
+abort() { echo "$1"; exit 1; }
 
 MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0"
+DT_PATH=device/TECNO/CG8
 DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b PBRP-CG8"
 
 echo " ===+++ Setting up Build Environment +++==="
+mkdir ~/twrp10
+cd ~/twrp10
 apt install openssh-server -y
 apt update --fix-missing
 apt install openssh-server -y
-mkdir ~/twrp11 && cd ~/twrp11
+DEVICE=${DT_PATH##*\/}
 
-echo " ===+++ Syncing Recovery Sources  +++==="
-#==================working=========
-#repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-#==================================
-repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0
-repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
+echo " ===+++ Syncing Recovery Sources +++==="
+repo init --depth=1 -u $MANIFEST -g default,-device,-mips,-darwin,-notdefault 
+repo sync -j$(nproc --all)
+git clone --depth=1 $DT_LINK $DT_PATH
 
-#repo init --depth=1 -u $MANIFEST
-#repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
-git clone --depth=1 $DT_LINK device/TECNO/CG8
+echo " ===+++ Patching Recovery Sources +++==="
+rm -rf bootable/recovery
+git clone --depth=1 https://github.com/PitchBlackRecoveryProject/android_bootable_recovery.git -b android-11.0 bootable/recovery
+cd bootable/recovery
+applyPatch() {
+  curl -sL $1 | patch -p1
+  [ $? != 0 ] && echo " Patch $1 failed" && exit
+}
+#applyPatch https://github.com/TeamWin/android_bootable_recovery/commit/878abc76c26e01e98c9b820c143b51086fe1577c.patch
+applyPatch https://raw.githubusercontent.com/punkzappa007/android_device_tecno_TECNO-CG8/PBRP-CG8/patch/bootable_recovery-Fix-double-bind-mounting-data-media.patch
+cd -
 
 echo " ===+++ Building Recovery +++==="
-. build/envsetup.sh
-export TW_THEME=portrait_hdpi
+rm -rf out
+source build/envsetup.sh
+echo " source build/envsetup.sh done"
 export ALLOW_MISSING_DEPENDENCIES=true
-#lunch omni_cg8-eng && mka pbrp
-lunch twrp_CG8-eng && mka -j$(nproc --all) pbrp
-# Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc) 
+lunch omni_${DEVICE}-eng || abort " lunch failed with exit status $?"
+echo " lunch omni_${DEVICE}-eng done"
+mka recoveryimage || abort " mka failed with exit status $?"
+echo " mka recoveryimage done"
+
+# Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
 echo " ===+++ Uploading Recovery +++==="
-cd out/target/product/CG8
+version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
+OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
 
-sudo zip -r9 PBRP-CG8.zip recovery.img
+cd out/target/product/$DEVICE
+mv recovery.img ${OUTFILE%.zip}.img
+zip -r9 $OUTFILE ${OUTFILE%.zip}.img
 
-curl -sL https://git.io/file-transfer | sh 
-
-./transfer wet *.zip
-
-./transfer wet recovery.img
+curl -T $OUTFILE https://oshi.at
+#curl -F "file=@${OUTFILE}" https://file.io
+curl --upload-file $OUTFILE http://transfer.sh/

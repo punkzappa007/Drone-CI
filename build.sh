@@ -5,17 +5,15 @@ DT_PATH=device/TECNO/CG8
 DT_LINK="https://github.com/punkzappa007/android_device_tecno_TECNO-CG8.git -b PBRP-CG8"
 
 echo " ===+++ Setting up Build Environment +++==="
-mkdir ~/twrp10
-cd ~/twrp10
 apt install openssh-server -y
 apt update --fix-missing
 apt install openssh-server -y
-DEVICE=${DT_PATH##*\/}
+mkdir ~/twrp11 && cd ~/twrp11
 
 echo " ===+++ Syncing Recovery Sources +++==="
-repo init --depth=1 -u $MANIFEST -g default,-device,-mips,-darwin,-notdefault 
-repo sync -j$(nproc --all)
-git clone --depth=1 $DT_LINK $DT_PATH
+repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0
+repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
+git clone --depth=1 $DT_LINK device/TECNO/CG8
 
 echo " ===+++ Patching Recovery Sources +++==="
 rm -rf bootable/recovery

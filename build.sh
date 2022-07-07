@@ -21,6 +21,8 @@ repo sync -j$(nproc --all) -f --force-sync
 #repo sync -c --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune -j$(nproc --all)
 
 git clone --depth=1 $DT_LINK device/TECNO/CG8
+git fetch https://gerrit.twrp.me/android_bootable_recovery refs/changes/05/5405/18 && git cherry-pick FETCH_HEAD
+git fetch https://gerrit.twrp.me/android_system_vold refs/changes/40/5540/4 && git cherry-pick FETCH_HEAD
 
 echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh

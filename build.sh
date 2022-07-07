@@ -15,14 +15,15 @@ echo " ===+++ Syncing Recovery Sources  +++==="
 #repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0 --groups=all,-notdefault,-device,-darwin,-x86,-mips
 #==================================
 repo init --depth=1 -u $MANIFEST
+git fetch https://gerrit.twrp.me/android_bootable_recovery refs/changes/05/5405/18 && git cherry-pick FETCH_HEAD
+git fetch https://gerrit.twrp.me/android_system_vold refs/changes/40/5540/4 && git cherry-pick FETCH_HEAD
 #repo sync -c -j4 --force-sync --no-clone-bundle --no-tags
 #repo sync --force-sync
 repo sync -j$(nproc --all) -f --force-sync
 #repo sync -c --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune -j$(nproc --all)
 
 git clone --depth=1 $DT_LINK device/TECNO/CG8
-git fetch https://gerrit.twrp.me/android_bootable_recovery refs/changes/05/5405/18 && git cherry-pick FETCH_HEAD
-git fetch https://gerrit.twrp.me/android_system_vold refs/changes/40/5540/4 && git cherry-pick FETCH_HEAD
+
 
 echo " ===+++ Building Recovery +++==="
 . build/envsetup.sh

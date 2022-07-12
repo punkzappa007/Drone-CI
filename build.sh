@@ -1,43 +1,40 @@
 #!/bin/bash
 # Just a basic script U can improvise lateron asper ur need xD 
 
-MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-10.0"
-DEVICE=A9_Pro
-DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro -b android-10.0"
-DT_PATH=device/umidigi/A9_Pro
+MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-10.0"
+DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro.git -b android-10.0"
 
 echo " ===+++ Setting up Build Environment +++==="
-sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php* 
-sudo -E apt-get clean 
-sudo -E apt-get -qq update
-sudo -E apt-get -qq install bc build-essential zip curl libstdc++6 git wget python gcc clang libssl-dev repo rsync flex curl  bison aria2
-sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
-sudo chmod a+rx /usr/local/bin/repo
+apt install openssh-server -y
+apt update --fix-missing
+apt install openssh-server -y
+mkdir ~/twrp11 && cd ~/twrp11
 
-echo " ===+++ Syncing Recovery Sources +++==="
-mkdir work
-cd work
-repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-repo sync -j4
-repo sync -j4
-git clone $DT_LINK --depth=1 --single-branch $DT_PATH
+echo " ===+++ Syncing Recovery Sources  +++==="
+#==================working=========
+#repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-11.0 --groups=all,-notdefault,-device,-darwin,-x86,-mips
+#==================================
+repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0
+repo sync --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
+
+#repo init --depth=1 -u $MANIFEST
+#repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+git clone --depth=1 $DT_LINK device/UMIDIGI/A9_Pro
 
 echo " ===+++ Building Recovery +++==="
-cd work
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch twrp_${DEVICE}-eng && mka recoveryimage
-
-# Upload zips & recovery.img (U can improvise lateron adding telegram support etc etc)
+#lunch omni_cg8-eng && mka pbrp
+lunch twrp_A9_Pro-eng && mka -j$(nproc --all) pbrp
+# Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc) 
 echo " ===+++ Uploading Recovery +++==="
-version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
-OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
+cd out/target/product/A9_Pro
 
-cd out/target/product/$DEVICE
-mv recovery.img ${OUTFILE%.zip}.img
-zip -r9 $OUTFILE ${OUTFILE%.zip}.img
+sudo zip -r9 PBRP-A9_Pro.zip recovery.img
 
-#curl -T $OUTFILE https://oshi.at
-curl -sL $OUTFILE https://git.io/file-transfer | sh
+curl -sL https://git.io/file-transfer | sh 
+
 ./transfer wet *.zip
+
+./transfer wet recovery.img

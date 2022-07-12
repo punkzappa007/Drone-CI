@@ -1,5 +1,5 @@
 #!/bin/bash
-# Just a basic script U can improvise lateron asper ur need xD 
+# Just a basic script U can improvise lateron asper ur need xD
 
 MANIFEST="git://github.com/PitchBlackRecoveryProject/manifest_pb -b android-10.0"
 DT_LINK="https://github.com/punkzappa007/android_device_umidigi_a9pro.git -b android-10.0"

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Just a basic script U can improvise lateron asper ur need xD
+# Just a basic script U can improvise lateron asper ur need xD 
 
 MANIFEST="https://gitlab.com/OrangeFox/sync.git"
 DEVICE=A9_Pro
@@ -24,6 +24,7 @@ cd ~/fox_10.0
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
+export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
 lunch twrp_A9_Pro-eng && mka recoveryimage
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)

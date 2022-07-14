@@ -10,7 +10,7 @@ echo " ===+++ Setting up Build Environment +++==="
 apt install openssh-server -y
 apt update --fix-missing
 apt install openssh-server -y
-mkdir mkdir ~/OrangeFox_sync && cd ~/OrangeFox_sync
+mkdir ~/OrangeFox_sync && cd ~/OrangeFox_sync
 
 echo " ===+++ Syncing Recovery Sources  +++==="
 git clone $MANIFEST
@@ -24,7 +24,7 @@ cd ~/fox_10.0
 . build/envsetup.sh
 export TW_THEME=portrait_hdpi
 export ALLOW_MISSING_DEPENDENCIES=true
-lunch twrp_A9_Pro-eng && mka bootimage
+lunch twrp_A9_Pro-eng && mka recoveryimage
 
 # Upload zips & recovery.img (U can improvise lateron adding telegram supportetc etc)
 echo " ===+++ Uploading Recovery +++==="
@@ -32,7 +32,7 @@ version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" 
 OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
 
 cd ~/fox_11.0/out/target/product/$DEVICE
-mv boot.img ${OUTFILE%.zip}.img
+mv recovery.img ${OUTFILE%.zip}.img
 zip -r9 $OUTFILE ${OUTFILE%.zip}.img
 
 #curl -T $OUTFILE https://oshi.at

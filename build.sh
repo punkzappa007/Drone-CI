@@ -32,7 +32,7 @@ echo " ===+++ Uploading Recovery +++==="
 version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
 OUTFILE=TWRP-${version}-${DEVICE}-$(date "+%Y%m%d-%I%M").zip
 
-cd ~/fox_11.0/out/target/product/$DEVICE
+cd ~/fox_10.0/out/target/product/$DEVICE
 mv recovery.img ${OUTFILE%.zip}.img
 zip -r9 $OUTFILE ${OUTFILE%.zip}.img
 
